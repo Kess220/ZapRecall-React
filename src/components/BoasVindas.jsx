@@ -1,28 +1,35 @@
-import { useState } from "react";
+import React from "react";
+import {
+  BemVindoContainer,
+  Logo,
+  ZapRecallTitle,
+  IniciarButton,
+} from "./StyledBemVindo";
+
 import imagem from "../assets/logo.png";
 import ZapRecall from "./ZapRecall";
 
 const IniciarRecall = () => {
-  const [isToRender, setIsToRender] = useState(true);
+  const [isToRender, setIsToRender] = React.useState(true);
 
   const handleButtonClick = () => {
     setIsToRender(false);
   };
 
   return (
-    <div className="bemVindo">
+    <BemVindoContainer>
       {isToRender ? (
         <>
-          <img className="logo" src={imagem} alt="Descrição da imagem" />
-          <h1 className="zapRecall">ZapReacall</h1>
-          <button className="iniciar" onClick={handleButtonClick}>
+          <Logo src={imagem} alt="Descrição da imagem" />
+          <ZapRecallTitle>ZapReacall</ZapRecallTitle>
+          <IniciarButton onClick={handleButtonClick}>
             Iniciar Recall
-          </button>
+          </IniciarButton>
         </>
       ) : (
         <ZapRecall />
       )}
-    </div>
+    </BemVindoContainer>
   );
 };
 
