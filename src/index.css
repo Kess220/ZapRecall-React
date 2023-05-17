@@ -1,0 +1,231 @@
+body {
+
+  display: flex;
+  background-color: #FB6B6B;
+  justify-content: center;
+}
+
+
+
+.bemVindo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+
+.logo {
+  width: 136px;
+  height: 161px;
+}
+
+.zapRecall {
+  font-family: 'Righteous';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 45px;
+
+
+
+  color: #FFFFFF;
+  margin-top: 13px;
+}
+
+.iniciar {
+  font-family: 'Recursive',
+    sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+  margin-top: 30px;
+  width: 246px;
+  height: 54px;
+
+  background: #FFFFFF;
+  border: 1px solid #D70900;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+
+  color: #D70900;
+}
+
+
+nav {
+  display: flex;
+  align-items: center;
+
+}
+
+nav>h1 {
+  width: 203.17px;
+  height: 44px;
+  font-family: 'Righteous';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 45px;
+
+
+
+  color: #FFFFFF;
+}
+
+.logo-app {
+  width: 52px;
+  height: 60px;
+}
+
+.pergunta {
+  display: flex;
+  width: 300px;
+  height: 65px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 25px
+}
+
+.pergunta>h1 {
+  margin-left: 15px;
+  width: 87px;
+  height: 19px;
+
+  font-family: 'Recursive';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #333333;
+}
+
+.play {
+  margin-right: 22px;
+  width: 20px;
+  height: 23px;
+
+}
+
+.side-bar {
+  position: fixed;
+  top: 90vh;
+
+
+
+  display: flex;
+  width: 375px;
+  height: 70px;
+  background: #FFFFFF;
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'Recursive';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+
+  color: #333333;
+
+}
+
+.card {
+
+  width: 299px;
+  height: 131px;
+  background: #FFFFD5;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  margin: 25px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.card-resposta {
+  width: 299px;
+  height: 131px;
+  background: #FFFFD5;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  margin: 25px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.card-resposta>h1 {
+  font-family: 'Recursive';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #333333;
+}
+
+.card>h1 {
+  font-family: 'Recursive';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #333333;
+}
+
+.icone {
+  width: 30px;
+  height: 20px;
+}
+
+
+.botoes {
+  margin: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.virar {
+  display: flex;
+  align-items: flex-end;
+}
+
+.nao-lembrei {
+  width: 85.17px;
+  height: 37.17px;
+
+  background: #FF3030;
+  border-radius: 5px;
+  color: #FFFFFF;
+}
+
+.quase-lembrei {
+  width: 85.17px;
+  height: 37.17px;
+
+  background: #FF922E;
+  border-radius: 5px;
+  color: #FFFFFF;
+
+}
+
+.zap {
+  width: 85.17px;
+  height: 37.17px;
+
+  background: #2FBE34;
+  border-radius: 5px;
+  color: #FFFFFF;
+
+}
