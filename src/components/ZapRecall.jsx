@@ -5,6 +5,8 @@ import play from "../assets/seta_play.png";
 import virar from "../assets/seta_virar.png";
 import SideBar from "./SideBar.jsx";
 
+/* eslint-disable react/prop-types */
+
 const Logo = styled.img`
   width: 52px;
   height: 60px;
@@ -145,10 +147,11 @@ const Pergunta = ({
   index,
   perguntaAtiva,
   exibirResposta,
+
   exibirPergunta,
   buttonZap,
 }) => {
-  const [zapClicado, setZapClicado] = useState(false);
+  const [, setZapClicado] = useState(false);
   const [respostaRevelada, setRespostaRevelada] = useState(false);
 
   const revealQuestion = () => {
