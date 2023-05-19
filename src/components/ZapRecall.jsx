@@ -40,6 +40,7 @@ const QuestionWrapper = styled.div`
   background: #ffffd5;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+  margin-bottom: 25px;
 `;
 
 const PerguntaWrapper = styled.div`
@@ -75,6 +76,8 @@ const FlipButton = styled.img`
   width: 30px;
   height: 20px;
   cursor: pointer;
+  margin-right: 15px;
+  margin-bottom: 6px;
 `;
 
 const RespostaWrapper = styled.div`
@@ -89,6 +92,10 @@ const RespostaWrapper = styled.div`
   border-radius: 5px;
 `;
 
+const P = styled.p`
+  margin-left: 15px;
+`;
+
 const PerguntaTexto = styled.p`
   font-family: "Recursive";
   font-style: normal;
@@ -98,6 +105,7 @@ const PerguntaTexto = styled.p`
   color: #333333;
   width: 100%;
   height: 100%;
+  margin-top: 18px;
 `;
 
 const RespostaBotoes = styled.div`
@@ -177,7 +185,9 @@ const ZapRecall = () => {
               <>
                 {!showAnswer ? (
                   <QuestionWrapper>
-                    <PerguntaTexto>{card.question}</PerguntaTexto>
+                    <PerguntaTexto>
+                      <P>{card.question}</P>
+                    </PerguntaTexto>
                     <FlipButton
                       src={flipIcon}
                       alt="Flip"
@@ -186,7 +196,9 @@ const ZapRecall = () => {
                   </QuestionWrapper>
                 ) : (
                   <RespostaWrapper>
-                    <PerguntaTexto>{card.answer}</PerguntaTexto>
+                    <PerguntaTexto>
+                      <P>{card.answer}</P>
+                    </PerguntaTexto>
                     <RespostaBotoes>
                       <BotaoZap onClick={() => handleAnswerClick("Zap")}>
                         Zap
