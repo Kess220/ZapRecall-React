@@ -1,11 +1,9 @@
 import { useState } from "react";
-import imagem from "../assets/logo.png";
 import styled from "styled-components";
-import play from "../assets/seta_play.png";
-import virar from "../assets/seta_virar.png";
+import playIcon from "../assets/seta_play.png";
+import flipIcon from "../assets/seta_virar.png";
 import SideBar from "./SideBar.jsx";
-
-/* eslint-disable react/prop-types */
+import logoImagem from "../assets/logo.png";
 
 const Logo = styled.img`
   width: 52px;
@@ -14,7 +12,6 @@ const Logo = styled.img`
 
 const Nave = styled.div`
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
   margin-top: 50px;
@@ -33,27 +30,27 @@ const H1 = styled.h1`
   transform: rotate(0.58deg);
 `;
 
-const PerguntaWrapper = styled.div`
-  /* Styles for the question wrapper */
+const QuestionWrapper = styled.div`
+  width: 299px;
+  height: 131px;
   display: flex;
-  width: 300px;
-  height: 65px;
-  background: #ffffff;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: #ffffd5;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+`;
+
+const PerguntaWrapper = styled.div`
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-
-  &.card {
-    width: 299px;
-    height: 131px;
-    background: #ffffd5;
-    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-    border-radius: 5px;
-    display: flex;
-    align-items: flex-start;
-  }
+  padding: 16px;
+  background: #f0f0f0;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 `;
 
 const PerguntaNumero = styled.h1`
@@ -71,237 +68,150 @@ const PlayButton = styled.img`
   margin-right: 20px;
   width: 20px;
   height: 23px;
+  cursor: pointer;
 `;
 
-const VirarButton = styled.img`
-  /* Styles for the "flip" button */
-  display: flex;
-  align-items: flex-end;
+const FlipButton = styled.img`
   width: 30px;
   height: 20px;
-  margin-top: 105px;
-  margin-right: 10px;
+  cursor: pointer;
 `;
 
 const RespostaWrapper = styled.div`
-  /* Styles for the answer wrapper */
+  width: 299px;
+  height: 131px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  background: #ffffd5;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
 `;
 
-const RespostaTexto = styled.p`
-  /* Styles for the answer text */
+const PerguntaTexto = styled.p`
   font-family: "Recursive";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   color: #333333;
+  width: 100%;
+  height: 100%;
 `;
 
 const RespostaBotoes = styled.div`
-  /* Styles for the answer buttons */
   display: flex;
   width: 100%;
-  margin-top: 9px;
   justify-content: space-between;
+  padding: 0 16px 16px 16px;
 `;
-const BotaoZap = styled.button`
-  /* Styles for the answer button */
+
+const Botao = styled.button`
   width: 85.17px;
   height: 37.17px;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+`;
 
+const BotaoZap = styled(Botao)`
   background: #2fbe34;
-  border-radius: 5px;
-  color: #ffffff;
-  cursor: pointer;
 `;
 
-const BotaoQuase = styled.button`
-  /* Styles for the answer button */
-  width: 85.17px;
-  height: 37.17px;
-
+const BotaoQuase = styled(Botao)`
   background: #ff922e;
-  border-radius: 5px;
-  color: #ffffff;
-  cursor: pointer;
 `;
 
-const BotaoNao = styled.button`
-  /* Styles for the answer button */
-  width: 85.17px;
-  height: 37.17px;
-
+const BotaoNao = styled(Botao)`
   background: #ff3030;
-  border-radius: 5px;
-  color: #ffffff;
-  cursor: pointer;
 `;
-
-const Pergunta = ({
-  pergunta,
-  index,
-  perguntaAtiva,
-  exibirResposta,
-
-  exibirPergunta,
-  buttonZap,
-}) => {
-  const [, setZapClicado] = useState(false);
-  const [respostaRevelada, setRespostaRevelada] = useState(false);
-
-  const revealQuestion = () => {
-    return perguntaAtiva === index;
-  };
-
-  const handleVirar = () => {
-    setRespostaRevelada(!respostaRevelada);
-    console.log(pergunta.resposta);
-  };
-
-  const handleNaoLembrei = () => {
-    // Implement logic for "I don't remember" button here
-  };
-
-  const handleQuaseLembrei = () => {
-    // Implement logic for "I almost remember" button here
-  };
-
-  const handleZap = () => {
-    setZapClicado(true);
-    setRespostaRevelada(false);
-    buttonZap(index);
-  };
-
-  if (
-    !pergunta ||
-    typeof pergunta !== "object" ||
-    !pergunta.resposta ||
-    typeof pergunta.resposta !== "string"
-  ) {
-    return null; // Render something different if the "pergunta" prop is invalid
-  }
-
-  return (
-    <PerguntaWrapper
-      className={`pergunta ${revealQuestion() ? "revealed card" : ""}`}
-    >
-      {revealQuestion() ? (
-        <>
-          <PerguntaNumero>
-            {respostaRevelada ? (
-              <RespostaWrapper>
-                <RespostaTexto>{pergunta.resposta}</RespostaTexto>
-                <RespostaBotoes>
-                  <BotaoNao onClick={handleNaoLembrei}>Não lembrei</BotaoNao>
-                  <BotaoQuase onClick={handleQuaseLembrei}>
-                    Quase lembrei
-                  </BotaoQuase>
-                  <BotaoZap onClick={handleZap}>Zap</BotaoZap>
-                </RespostaBotoes>
-              </RespostaWrapper>
-            ) : (
-              pergunta.pergunta
-            )}
-          </PerguntaNumero>
-          {!respostaRevelada && (
-            <div>
-              <VirarButton
-                className="icone"
-                src={virar}
-                alt="Flip Icon"
-                onClick={handleVirar}
-              />
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          <PerguntaNumero>{pergunta.numeroPerg}</PerguntaNumero>
-          <PlayButton
-            className="play"
-            src={play}
-            alt="Play Icon"
-            onClick={() => exibirPergunta(index)}
-          />
-        </>
-      )}
-
-      {exibirResposta && revealQuestion() && !respostaRevelada && (
-        <div className="virar">
-          <VirarButton
-            className="icone"
-            src={virar}
-            alt="Flip Icon"
-            onClick={handleVirar}
-          />
-        </div>
-      )}
-    </PerguntaWrapper>
-  );
-};
 
 const ZapRecall = () => {
-  const perguntas = [
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [flipped, setFlipped] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  const cards = [
     {
-      numeroPerg: "Pergunta 1",
-      pergunta: "O que é JSX?",
-      resposta: "JSX é uma sintaxe para escrever HTML dentro do JS",
+      question: "O que é JSX?",
+      answer: "Uma extensão da linguagem JavaScript",
     },
     {
-      numeroPerg: "Pergunta 2",
-      pergunta: "Se o amor é a resposta, qual é a pergunta?",
-      resposta: "Tem resposta pra essa pergunta?",
+      question: "O React é __",
+      answer: "Uma biblioteca JavaScript para construção de interfaces",
     },
+    { question: "Componentes devem iniciar com __", answer: "Letra maiúscula" },
+    { question: "Podemos colocar __ dentro do JSX", answer: "expressões" },
     {
-      numeroPerg: "Pergunta 3",
-      pergunta: "Feijão é por cima ou por baixo do arroz?",
-      resposta: "Feijão por cima, obviamente!",
-    },
-    {
-      numeroPerg: "Pergunta 4",
-      pergunta:
-        "Como posso dizer para minha família em um jantar que sou programador?",
-      resposta: "Sou garoto de programa",
+      question: "O ReactDOM nos ajuda __",
+      answer: "Interagindo com a DOM para colocar componentes React na mesma",
     },
   ];
 
-  const [perguntaAtiva, setPerguntaAtiva] = useState(null);
-  const [exibirResposta, setExibirResposta] = useState(true);
-
-  const exibirPergunta = (index) => {
-    setPerguntaAtiva(index);
-    setExibirResposta(false);
+  const handleClick = (index) => {
+    setActiveIndex(index);
+    setFlipped(true);
+    setShowAnswer(false);
   };
 
-  const buttonZap = (index) => {
-    const updatedPerguntas = [...perguntas];
-    updatedPerguntas[index].zapClicado = true;
-    setPerguntaAtiva(null);
-    console.log(updatedPerguntas);
+  const handleFlip = () => {
+    setShowAnswer(true);
+  };
+
+  const handleAnswerClick = (answer) => {
+    console.log("Resposta selecionada:", answer);
+    // Aqui você pode adicionar a lógica para tratar a resposta selecionada
   };
 
   return (
     <>
       <Nave>
-        <Logo src={imagem} alt="Image description" />
+        <Logo src={logoImagem} alt="Image description" />
         <H1>ZapRecall</H1>
       </Nave>
       <div className="perguntas">
-        {perguntas.map((pergunta, index) => (
-          <Pergunta
-            key={index}
-            pergunta={pergunta}
-            index={index}
-            perguntaAtiva={perguntaAtiva}
-            exibirResposta={exibirResposta}
-            exibirPergunta={exibirPergunta}
-            buttonZap={buttonZap}
-          />
+        {cards.map((card, index) => (
+          <div key={index}>
+            {index === activeIndex && flipped ? (
+              <>
+                {!showAnswer ? (
+                  <QuestionWrapper>
+                    <PerguntaTexto>{card.question}</PerguntaTexto>
+                    <FlipButton
+                      src={flipIcon}
+                      alt="Flip"
+                      onClick={handleFlip}
+                    />
+                  </QuestionWrapper>
+                ) : (
+                  <RespostaWrapper>
+                    <PerguntaTexto>{card.answer}</PerguntaTexto>
+                    <RespostaBotoes>
+                      <BotaoZap onClick={() => handleAnswerClick("Zap")}>
+                        Zap
+                      </BotaoZap>
+                      <BotaoQuase onClick={() => handleAnswerClick("Quase")}>
+                        Quase
+                      </BotaoQuase>
+                      <BotaoNao onClick={() => handleAnswerClick("Não")}>
+                        Não
+                      </BotaoNao>
+                    </RespostaBotoes>
+                  </RespostaWrapper>
+                )}
+              </>
+            ) : (
+              <PerguntaWrapper>
+                <PerguntaNumero>Pergunta {index + 1}</PerguntaNumero>
+                <PlayButton
+                  src={playIcon}
+                  alt="Play"
+                  onClick={() => handleClick(index)}
+                />
+              </PerguntaWrapper>
+            )}
+          </div>
         ))}
       </div>
       <SideBar />
