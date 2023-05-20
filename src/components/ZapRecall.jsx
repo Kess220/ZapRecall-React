@@ -48,7 +48,7 @@ const PerguntaWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background: #f0f0f0;
+  background: #ffffff;
   margin-bottom: 16px;
   border-radius: 8px;
   transition: all 0.3s ease;
@@ -61,8 +61,20 @@ const PerguntaNumero = styled.h1`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  color: #333333;
   margin-top: 5px;
+  color: ${(props) => {
+    if (props.answered) {
+      if (props.selectedAnswer === "Zap") {
+        return "#2fbe34"; // cor para o botão "Zap" selecionado
+      } else if (props.selectedAnswer === "Quase") {
+        return "#fd7f02"; // cor para o botão "Quase" selecionado
+      } else if (props.selectedAnswer === "Não") {
+        return "#e60000"; // cor para o botão "Não" selecionado
+      } else {
+        return "#333"; // cor padrão para perguntas respondidas
+      }
+    }
+  }};
 `;
 
 const PlayButton = styled.img`
@@ -90,13 +102,10 @@ const RespostaWrapper = styled.div`
   background: #ffffd5;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+  margin-bottom: 25px;
 `;
 
-const P = styled.p`
-  margin-left: 15px;
-`;
-
-const PerguntaTexto = styled.p`
+const PerguntaTexto = styled.div`
   font-family: "Recursive";
   font-style: normal;
   font-weight: 400;
@@ -106,6 +115,10 @@ const PerguntaTexto = styled.p`
   width: 100%;
   height: 100%;
   margin-top: 18px;
+`;
+
+const P = styled.span`
+  margin-left: 15px;
 `;
 
 const RespostaBotoes = styled.div`
@@ -124,21 +137,23 @@ const Botao = styled.button`
 `;
 
 const BotaoZap = styled(Botao)`
-  background: #2fbe34;
+  background: ${(props) => (props.selected ? "#2fbe34" : "#33a532")};
 `;
 
 const BotaoQuase = styled(Botao)`
-  background: #ff922e;
+  background: ${(props) => (props.selected ? "#fd7f02" : "#fd7f02")};
 `;
 
 const BotaoNao = styled(Botao)`
-  background: #ff3030;
+  background: #e60000;
 `;
 
 const ZapRecall = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [flipped, setFlipped] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [answered, setAnswered] = useState([]);
 
   const cards = [
     {
@@ -161,6 +176,7 @@ const ZapRecall = () => {
     setActiveIndex(index);
     setFlipped(true);
     setShowAnswer(false);
+    setSelectedAnswer(null);
   };
 
   const handleFlip = () => {
@@ -168,9 +184,16 @@ const ZapRecall = () => {
   };
 
   const handleAnswerClick = (answer) => {
-    console.log("Resposta selecionada:", answer);
-    // Aqui você pode adicionar a lógica para tratar a resposta selecionada
+    setSelectedAnswer(answer);
+    const newAnswered = [...answered];
+    newAnswered.push(activeIndex);
+    setAnswered(newAnswered);
+    setActiveIndex(null);
+    setFlipped(false);
+    setShowAnswer(false);
   };
+
+  const isAnswered = (index) => answered.includes(index);
 
   return (
     <>
@@ -200,13 +223,22 @@ const ZapRecall = () => {
                       <P>{card.answer}</P>
                     </PerguntaTexto>
                     <RespostaBotoes>
-                      <BotaoZap onClick={() => handleAnswerClick("Zap")}>
+                      <BotaoZap
+                        onClick={() => handleAnswerClick("Zap")}
+                        selected={selectedAnswer === "Zap"}
+                      >
                         Zap
                       </BotaoZap>
-                      <BotaoQuase onClick={() => handleAnswerClick("Quase")}>
+                      <BotaoQuase
+                        onClick={() => handleAnswerClick("Quase")}
+                        selected={selectedAnswer === "Quase"}
+                      >
                         Quase
                       </BotaoQuase>
-                      <BotaoNao onClick={() => handleAnswerClick("Não")}>
+                      <BotaoNao
+                        onClick={() => handleAnswerClick("Não")}
+                        selected={selectedAnswer === "Não"}
+                      >
                         Não
                       </BotaoNao>
                     </RespostaBotoes>
@@ -214,8 +246,13 @@ const ZapRecall = () => {
                 )}
               </>
             ) : (
-              <PerguntaWrapper>
-                <PerguntaNumero>Pergunta {index + 1}</PerguntaNumero>
+              <PerguntaWrapper answered={isAnswered(index)}>
+                <PerguntaNumero
+                  answered={isAnswered(index)}
+                  selectedAnswer={selectedAnswer}
+                >
+                  Pergunta {index + 1}
+                </PerguntaNumero>
                 <PlayButton
                   src={playIcon}
                   alt="Play"
