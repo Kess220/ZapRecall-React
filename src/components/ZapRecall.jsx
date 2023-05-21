@@ -67,6 +67,7 @@ const PerguntaNumero = styled.h1`
   font-size: 16px;
   line-height: 19px;
   margin-top: 5px;
+  text-decoration: ${(props) => (props.answered ? "line-through" : "none")};
   color: ${(props) => {
     if (props.answered) {
       if (props.selectedAnswer === "Zap") {
