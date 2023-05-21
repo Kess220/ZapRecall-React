@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 
 const SideBarContainer = styled.div`
@@ -18,10 +19,12 @@ const SideBarContainer = styled.div`
   color: #333333;
 `;
 
-const SideBar = () => {
+const SideBar = ({ totalQuestions, totalAnsweredQuestions }) => {
   return (
     <>
-      <SideBarContainer>Concluido 0/4</SideBarContainer>
+      <SideBarContainer>
+        Concluido {totalAnsweredQuestions}/{totalQuestions}
+      </SideBarContainer>
     </>
   );
 };

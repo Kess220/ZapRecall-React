@@ -4,6 +4,9 @@ import playIcon from "../assets/seta_play.png";
 import flipIcon from "../assets/seta_virar.png";
 import SideBar from "./SideBar.jsx";
 import logoImagem from "../assets/logo.png";
+import zapIcon from "../assets/icone_certo.png";
+import quaseIcon from "../assets/icone_quase.png";
+import naoIcon from "../assets/icone_erro.png";
 
 const Logo = styled.img`
   width: 52px;
@@ -44,6 +47,8 @@ const QuestionWrapper = styled.div`
 `;
 
 const PerguntaWrapper = styled.div`
+  width: 300px;
+  height: 65px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,20 +70,19 @@ const PerguntaNumero = styled.h1`
   color: ${(props) => {
     if (props.answered) {
       if (props.selectedAnswer === "Zap") {
-        return "#2fbe34"; // cor para o botão "Zap" selecionado
+        return "#2fbe34";
       } else if (props.selectedAnswer === "Quase") {
-        return "#fd7f02"; // cor para o botão "Quase" selecionado
+        return "#fd7f02";
       } else if (props.selectedAnswer === "Não") {
-        return "#e60000"; // cor para o botão "Não" selecionado
+        return "#e60000";
       } else {
-        return "#333"; // cor padrão para perguntas respondidas
+        return "color: #333333;";
       }
     }
   }};
 `;
 
 const PlayButton = styled.img`
-  margin-right: 20px;
   width: 20px;
   height: 23px;
   cursor: pointer;
@@ -153,7 +157,7 @@ const ZapRecall = () => {
   const [flipped, setFlipped] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [answered, setAnswered] = useState([]);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   const cards = [
     {
@@ -176,7 +180,7 @@ const ZapRecall = () => {
     setActiveIndex(index);
     setFlipped(true);
     setShowAnswer(false);
-    setSelectedAnswer(null);
+    setSelectedAnswer(selectedAnswers[index] || null);
   };
 
   const handleFlip = () => {
@@ -184,16 +188,19 @@ const ZapRecall = () => {
   };
 
   const handleAnswerClick = (answer) => {
-    setSelectedAnswer(answer);
-    const newAnswered = [...answered];
-    newAnswered.push(activeIndex);
-    setAnswered(newAnswered);
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[activeIndex] = answer;
+    setSelectedAnswers(newSelectedAnswers);
     setActiveIndex(null);
     setFlipped(false);
     setShowAnswer(false);
   };
 
-  const isAnswered = (index) => answered.includes(index);
+  const isAnswered = (index) => selectedAnswers[index];
+
+  const totalQuestions = cards.length;
+  const answeredQuestions = selectedAnswers.filter((answer) => answer !== null);
+  const totalAnsweredQuestions = answeredQuestions.length;
 
   return (
     <>
@@ -223,24 +230,36 @@ const ZapRecall = () => {
                       <P>{card.answer}</P>
                     </PerguntaTexto>
                     <RespostaBotoes>
-                      <BotaoZap
-                        onClick={() => handleAnswerClick("Zap")}
-                        selected={selectedAnswer === "Zap"}
-                      >
-                        Zap
-                      </BotaoZap>
-                      <BotaoQuase
-                        onClick={() => handleAnswerClick("Quase")}
-                        selected={selectedAnswer === "Quase"}
-                      >
-                        Quase
-                      </BotaoQuase>
-                      <BotaoNao
-                        onClick={() => handleAnswerClick("Não")}
-                        selected={selectedAnswer === "Não"}
-                      >
-                        Não
-                      </BotaoNao>
+                      {selectedAnswer !== "Zap" ? (
+                        <>
+                          {selectedAnswer !== "Quase" ? (
+                            <>
+                              <BotaoZap
+                                onClick={() => handleAnswerClick("Zap")}
+                                selected={selectedAnswer === "Zap"}
+                              >
+                                Zap
+                              </BotaoZap>
+                              <BotaoQuase
+                                onClick={() => handleAnswerClick("Quase")}
+                                selected={selectedAnswer === "Quase"}
+                              >
+                                Quase
+                              </BotaoQuase>
+                              <BotaoNao
+                                onClick={() => handleAnswerClick("Não")}
+                                selected={selectedAnswer === "Não"}
+                              >
+                                Não
+                              </BotaoNao>
+                            </>
+                          ) : (
+                            <img src={quaseIcon} alt="Quase Icon" />
+                          )}
+                        </>
+                      ) : (
+                        <img src={zapIcon} alt="Zap Icon" />
+                      )}
                     </RespostaBotoes>
                   </RespostaWrapper>
                 )}
@@ -249,21 +268,36 @@ const ZapRecall = () => {
               <PerguntaWrapper answered={isAnswered(index)}>
                 <PerguntaNumero
                   answered={isAnswered(index)}
-                  selectedAnswer={selectedAnswer}
+                  selectedAnswer={selectedAnswers[index]}
                 >
                   Pergunta {index + 1}
                 </PerguntaNumero>
-                <PlayButton
-                  src={playIcon}
-                  alt="Play"
-                  onClick={() => handleClick(index)}
-                />
+                {selectedAnswers[index] !== "Zap" ? (
+                  selectedAnswers[index] !== "Quase" ? (
+                    selectedAnswers[index] !== "Não" ? (
+                      <PlayButton
+                        src={playIcon}
+                        alt="Play"
+                        onClick={() => handleClick(index)}
+                      />
+                    ) : (
+                      <img src={naoIcon} alt="Não Icon" />
+                    )
+                  ) : (
+                    <img src={quaseIcon} alt="Quase Icon" />
+                  )
+                ) : (
+                  <img src={zapIcon} alt="Zap Icon" />
+                )}
               </PerguntaWrapper>
             )}
           </div>
         ))}
       </div>
-      <SideBar />
+      <SideBar
+        totalQuestions={totalQuestions}
+        totalAnsweredQuestions={totalAnsweredQuestions}
+      />
     </>
   );
 };
