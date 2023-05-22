@@ -1,4 +1,6 @@
 import React from "react";
+import styled from "styled-components";
+
 import {
   BemVindoContainer,
   Logo,
@@ -9,6 +11,12 @@ import {
 import imagem from "../assets/logo.png";
 import ZapRecall from "./ZapRecall";
 
+const BemVindoStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50%;
+`;
 const IniciarRecall = () => {
   const [isToRender, setIsToRender] = React.useState(true);
 
@@ -20,11 +28,13 @@ const IniciarRecall = () => {
     <BemVindoContainer>
       {isToRender ? (
         <>
-          <Logo src={imagem} alt="Descrição da imagem" />
-          <ZapRecallTitle>ZapReacall</ZapRecallTitle>
-          <IniciarButton onClick={handleButtonClick}>
-            Iniciar Recall
-          </IniciarButton>
+          <BemVindoStyled>
+            <Logo src={imagem} alt="Descrição da imagem" />
+            <ZapRecallTitle>ZapReacall</ZapRecallTitle>
+            <IniciarButton onClick={handleButtonClick}>
+              Iniciar Recall
+            </IniciarButton>
+          </BemVindoStyled>
         </>
       ) : (
         <ZapRecall />

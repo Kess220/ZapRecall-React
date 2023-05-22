@@ -19,17 +19,26 @@ const Nave = styled.div`
   align-items: center;
   margin-top: 50px;
   margin-bottom: 70px;
+  margin-left: -24px;
+`;
+
+const Perguntas = styled.div`
+  margin-bottom: 50px;
 `;
 
 const H1 = styled.h1`
-  width: 203.17px;
-  height: 44px;
   font-family: "Righteous";
-  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 45px;
   display: flex;
   align-items: center;
   text-align: center;
+  letter-spacing: -0.012em;
+
   color: #ffffff;
+
   transform: rotate(0.58deg);
 `;
 
@@ -65,6 +74,7 @@ const PerguntaNumero = styled.h1`
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
+  color: #333333;
   line-height: 19px;
   margin-top: 5px;
   text-decoration: ${(props) => (props.answered ? "line-through" : "none")};
@@ -95,6 +105,7 @@ const FlipButton = styled.img`
   cursor: pointer;
   margin-right: 15px;
   margin-bottom: 6px;
+  color: #333333;
 `;
 
 const RespostaWrapper = styled.div`
@@ -175,6 +186,19 @@ const ZapRecall = () => {
       question: "O ReactDOM nos ajuda __",
       answer: "Interagindo com a DOM para colocar componentes React na mesma",
     },
+    {
+      question: "Usamos o npm para __",
+      answer: "Gerenciar os pacotes necessários e suas dependências",
+    },
+    {
+      question: "Usamos props para __",
+      answer: "Passar diferentes informações para componentes",
+    },
+    {
+      question: "Usamos estado (state) para __",
+      answer:
+        "Dizer para o React quais informações quando atualizadas devem renderizar a tela novamente",
+    },
   ];
 
   const handleClick = (index) => {
@@ -209,7 +233,7 @@ const ZapRecall = () => {
         <Logo src={logoImagem} alt="Image description" />
         <H1>ZapRecall</H1>
       </Nave>
-      <div className="perguntas">
+      <Perguntas className="perguntas">
         {cards.map((card, index) => (
           <div key={index}>
             {index === activeIndex && flipped ? (
@@ -294,7 +318,7 @@ const ZapRecall = () => {
             )}
           </div>
         ))}
-      </div>
+      </Perguntas>
       <SideBar
         totalQuestions={totalQuestions}
         totalAnsweredQuestions={totalAnsweredQuestions}
