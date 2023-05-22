@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import playIcon from "../assets/seta_play.png";
 import flipIcon from "../assets/seta_virar.png";
 import SideBar from "./SideBar.jsx";
@@ -17,9 +17,7 @@ const Nave = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  margin-bottom: 70px;
-  margin-left: -24px;
+  margin: 50px 0 70px -24px;
 `;
 
 const Perguntas = styled.div`
@@ -36,9 +34,7 @@ const H1 = styled.h1`
   align-items: center;
   text-align: center;
   letter-spacing: -0.012em;
-
   color: #ffffff;
-
   transform: rotate(0.58deg);
 `;
 
@@ -66,6 +62,24 @@ const PerguntaWrapper = styled.div`
   margin-bottom: 16px;
   border-radius: 8px;
   transition: all 0.3s ease;
+
+  ${(props) =>
+    props.answered &&
+    css`
+      text-decoration: line-through;
+      color: ${(props) => {
+        switch (props.selectedAnswer) {
+          case "Zap":
+            return "#2fbe34";
+          case "Quase":
+            return "#fd7f02";
+          case "Não":
+            return "#e60000";
+          default:
+            return "#333333";
+        }
+      }};
+    `}
 `;
 
 const PerguntaNumero = styled.h1`
@@ -74,23 +88,26 @@ const PerguntaNumero = styled.h1`
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  color: #333333;
   line-height: 19px;
   margin-top: 5px;
-  text-decoration: ${(props) => (props.answered ? "line-through" : "none")};
-  color: ${(props) => {
-    if (props.answered) {
-      if (props.selectedAnswer === "Zap") {
-        return "#2fbe34";
-      } else if (props.selectedAnswer === "Quase") {
-        return "#fd7f02";
-      } else if (props.selectedAnswer === "Não") {
-        return "#e60000";
-      } else {
-        return "color: #333333;";
-      }
-    }
-  }};
+
+  ${(props) =>
+    props.answered &&
+    props.selectedAnswer &&
+    css`
+      color: ${(props) => {
+        switch (props.selectedAnswer) {
+          case "Zap":
+            return "#2fbe34";
+          case "Quase":
+            return "#fd7f02";
+          case "Não":
+            return "#e60000";
+          default:
+            return "#333333";
+        }
+      }};
+    `}
 `;
 
 const PlayButton = styled.img`
@@ -239,7 +256,7 @@ const ZapRecall = () => {
             {index === activeIndex && flipped ? (
               <>
                 {!showAnswer ? (
-                  <QuestionWrapper>
+                  <QuestionWrapper data-test="flashcard">
                     <PerguntaTexto data-test="flashcard-text">
                       <P>{card.question}</P>
                     </PerguntaTexto>
@@ -251,7 +268,7 @@ const ZapRecall = () => {
                     />
                   </QuestionWrapper>
                 ) : (
-                  <RespostaWrapper>
+                  <RespostaWrapper data-test="flashcard">
                     <PerguntaTexto data-test="flashcard-text">
                       <P>{card.answer}</P>
                     </PerguntaTexto>
