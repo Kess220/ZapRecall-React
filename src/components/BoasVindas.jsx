@@ -31,7 +31,7 @@ const IniciarRecall = () => {
           <BemVindoStyled>
             <Logo src={imagem} alt="Descrição da imagem" />
             <ZapRecallTitle>ZapReacall</ZapRecallTitle>
-            <IniciarButton onClick={handleButtonClick}>
+            <IniciarButton data-test="start-btn" onClick={handleButtonClick}>
               Iniciar Recall
             </IniciarButton>
           </BemVindoStyled>

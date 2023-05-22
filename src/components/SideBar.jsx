@@ -22,7 +22,7 @@ const SideBarContainer = styled.div`
 const SideBar = ({ totalQuestions, totalAnsweredQuestions }) => {
   return (
     <>
-      <SideBarContainer>
+      <SideBarContainer data-test="footer">
         Concluido {totalAnsweredQuestions}/{totalQuestions}
       </SideBarContainer>
     </>

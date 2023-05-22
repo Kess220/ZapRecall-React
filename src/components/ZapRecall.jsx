@@ -240,10 +240,11 @@ const ZapRecall = () => {
               <>
                 {!showAnswer ? (
                   <QuestionWrapper>
-                    <PerguntaTexto>
+                    <PerguntaTexto data-test="flashcard-text">
                       <P>{card.question}</P>
                     </PerguntaTexto>
                     <FlipButton
+                      data-test="turn-btn"
                       src={flipIcon}
                       alt="Flip"
                       onClick={handleFlip}
@@ -251,7 +252,7 @@ const ZapRecall = () => {
                   </QuestionWrapper>
                 ) : (
                   <RespostaWrapper>
-                    <PerguntaTexto>
+                    <PerguntaTexto data-test="flashcard-text">
                       <P>{card.answer}</P>
                     </PerguntaTexto>
                     <RespostaBotoes>
@@ -259,24 +260,27 @@ const ZapRecall = () => {
                         <>
                           {selectedAnswer !== "Quase" ? (
                             <>
-                              <BotaoZap
-                                onClick={() => handleAnswerClick("Zap")}
-                                selected={selectedAnswer === "Zap"}
-                              >
-                                Zap
-                              </BotaoZap>
-                              <BotaoQuase
-                                onClick={() => handleAnswerClick("Quase")}
-                                selected={selectedAnswer === "Quase"}
-                              >
-                                Quase
-                              </BotaoQuase>
                               <BotaoNao
+                                data-test="no-btn"
                                 onClick={() => handleAnswerClick("Não")}
                                 selected={selectedAnswer === "Não"}
                               >
-                                Não
+                                Não lembrei
                               </BotaoNao>
+                              <BotaoQuase
+                                data-test="partial-btn"
+                                onClick={() => handleAnswerClick("Quase")}
+                                selected={selectedAnswer === "Quase"}
+                              >
+                                Quase não lembrei
+                              </BotaoQuase>
+                              <BotaoZap
+                                data-test="zap-btn"
+                                onClick={() => handleAnswerClick("Zap")}
+                                selected={selectedAnswer === "Zap"}
+                              >
+                                Zap!
+                              </BotaoZap>
                             </>
                           ) : (
                             <img src={quaseIcon} alt="Quase Icon" />
@@ -290,8 +294,12 @@ const ZapRecall = () => {
                 )}
               </>
             ) : (
-              <PerguntaWrapper answered={isAnswered(index)}>
+              <PerguntaWrapper
+                data-test="flashcard"
+                answered={isAnswered(index)}
+              >
                 <PerguntaNumero
+                  data-test="flashcard-text"
                   answered={isAnswered(index)}
                   selectedAnswer={selectedAnswers[index]}
                 >
@@ -301,18 +309,23 @@ const ZapRecall = () => {
                   selectedAnswers[index] !== "Quase" ? (
                     selectedAnswers[index] !== "Não" ? (
                       <PlayButton
+                        data-test="play-btn"
                         src={playIcon}
                         alt="Play"
                         onClick={() => handleClick(index)}
                       />
                     ) : (
-                      <img src={naoIcon} alt="Não Icon" />
+                      <img data-test="no-icon" src={naoIcon} alt="Não Icon" />
                     )
                   ) : (
-                    <img src={quaseIcon} alt="Quase Icon" />
+                    <img
+                      data-test="partial-icon"
+                      src={quaseIcon}
+                      alt="Quase Icon"
+                    />
                   )
                 ) : (
-                  <img src={zapIcon} alt="Zap Icon" />
+                  <img data-test="zap-icon" src={zapIcon} alt="Zap Icon" />
                 )}
               </PerguntaWrapper>
             )}
